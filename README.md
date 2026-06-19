@@ -3,15 +3,19 @@
 ## Integrantes del equipo
 
 * Guzman Contreras Erick Zahid
+* name_01
+* name_02
+* name_03
+* beta_name
 
 ## To Do
 
 ### Pantalla de inicio
 
-* [ ] Crear pantalla de inicio
-* [ ] Crear botón Play
+* [x] Crear pantalla de inicio
+* [x] Crear botón Play
 * [ ] Conectar botón Play con pantalla de juego
-* [ ] Crear wireframe de fondo y botón
+* [x] Crear wireframe de fondo y botón
 
 ### Pantalla de juego
 
