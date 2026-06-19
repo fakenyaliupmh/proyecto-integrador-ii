@@ -6,6 +6,7 @@
 * name_01
 * name_02
 * name_03
+* beta_name
 
 ## To Do
 
