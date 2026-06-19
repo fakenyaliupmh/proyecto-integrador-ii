@@ -6,7 +6,7 @@
 * name_01
 * name_02
 * name_03
-* Nyali Tzel
+* beta_name
 
 ## To Do
 
