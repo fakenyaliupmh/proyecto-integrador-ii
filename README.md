@@ -4,7 +4,7 @@
 
 * Guzman Contreras Erick Zahid
 * name_01
-* name_02
+* Erandi Cruz
 * name_03
 * Nyali Tzel
 
