@@ -3,7 +3,7 @@
 ## Integrantes del equipo
 
 * Guzman Contreras Erick Zahid
-* Cruz Martinez Kevin Alejandro
+* name_01: Alex
 * name_02
 * name_03
 * Nyali Tzel
