@@ -5,7 +5,7 @@
 * Guzman Contreras Erick Zahid
 * name_01: Alex
 * name_02
-* name_03
+* name_03: Josu
 * Nyali Tzel
 
 ## To Do
