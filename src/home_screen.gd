@@ -53,6 +53,7 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("click"):
+		$playButton/CollisionShape2D.disabled = true
 		$esceneAnimations.play("start_play")
 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
@@ -62,18 +63,37 @@ func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 	generate_words_pool(my_word)
 	gen_text_underscore(my_word)
 	
-func generate_words_pool(word: String) -> Array:
-	var my_word_pool = []
+func generate_words_pool(word: String) -> void:
+	var word_pool = []
 	for l in word:
-		my_word_pool.append(l)
-	return my_word_pool
+		word_pool.append(l)
+	
+	var alphabet := "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+	while word_pool.size() < 12:
+		var random_letter = alphabet[randi() % alphabet.length()]
+		if not word_pool.has(random_letter):
+			word_pool.append(random_letter)
+
+	word_pool.shuffle()
+
+	print("Pool de letras: ", word_pool)
+
+	for i in word_pool.size():
+		create_letter_label(word_pool[i], i)
 
 func gen_text_underscore(word: String) -> void:
-	var start_x := 2880
-	var y := 540
-	var spacing := 80
+	var start_x = 2304
+	var y = 500
+	var spacing = 80
 
 	for i in word.length():
 		var my_asset = underscore.instantiate()
 		my_asset.position = Vector2(start_x + i * spacing, y)
 		add_child(my_asset)
+		
+func create_letter_label(letter: String, index: int) -> void:
+	var label = Label.new()
+	label.text = letter
+	label.position = Vector2(2304 + (index % 6) * 100, 700 + int(index / 6) * 80)
+	label.add_theme_font_size_override("font_size", 48)
+	add_child(label)
