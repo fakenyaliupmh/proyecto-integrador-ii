@@ -1,6 +1,10 @@
 extends Node2D
 
 const underscore = preload("res://src/underscore.tscn")
+var current_words = ""
+var answer_slot = []
+var slot_nodes = []
+var used_buttons = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,6 +59,7 @@ func _process(delta: float) -> void:
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("click"):
 		$playButton/CollisionShape2D.disabled = true
+		$playButton/ButtonAnimation.play("play")
 		$esceneAnimations.play("start_play")
 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
@@ -74,6 +79,9 @@ func generate_words_pool(word: String) -> void:
 		var random_letter = alphabet[randi() % alphabet.length()]
 		if not word_pool.has(random_letter):
 			word_pool.append(random_letter)
+			
+	for i in range(word_pool.size()):
+		word_pool[i] = word_pool[i].to_upper()
 
 	word_pool.shuffle()
 
