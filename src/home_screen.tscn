@@ -2,10 +2,46 @@
 
 [ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_67g1r"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="2_w8yt5"]
-[ext_resource type="Texture2D" uid="uid://b17g4rpujy4lk" path="res://wireframes/play_button.png" id="4_44cor"]
+[ext_resource type="Texture2D" uid="uid://cjotvc46df3jq" path="res://assets/sprites/spritesheet.png" id="3_abx78"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
+
+[sub_resource type="Animation" id="Animation_cbsbc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ddxy4"]
+resource_name = "play"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Spritesheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335, 0.26666668, 0.3, 0.33333334, 0.36666667, 0.40000004, 0.43333337, 0.4666667, 0.5, 0.53333336, 0.5666667, 0.6, 0.6333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e2rjb"]
+_data = {
+&"RESET": SubResource("Animation_cbsbc"),
+&"play": SubResource("Animation_ddxy4")
+}
 
 [sub_resource type="Animation" id="Animation_w43ym"]
 length = 0.001
@@ -125,9 +161,15 @@ texture = ExtResource("2_w8yt5")
 position = Vector2(960, 540)
 shape = SubResource("CircleShape2D_w43ym")
 
-[node name="PlayButton" type="Sprite2D" parent="playButton" unique_id=2037070429]
-position = Vector2(960, 540)
-texture = ExtResource("4_44cor")
+[node name="Spritesheet" type="Sprite2D" parent="playButton" unique_id=1739221291]
+position = Vector2(957.00006, 542)
+scale = Vector2(0.8526388, 0.8826389)
+texture = ExtResource("3_abx78")
+hframes = 5
+vframes = 4
+
+[node name="ButtonAnimation" type="AnimationPlayer" parent="playButton" unique_id=919292713]
+libraries/ = SubResource("AnimationLibrary_e2rjb")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1003722529]
 position = Vector2(960, 540)

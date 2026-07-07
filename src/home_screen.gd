@@ -1,6 +1,14 @@
 extends Node2D
 
 const underscore = preload("res://src/underscore.tscn")
+const max_word_pool_size = 12
+const screen_width = 1920
+const screen_height = 1080
+
+var current_word = ""
+var answer_slot = []
+var slot_nodes = []
+var used_buttons = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -50,19 +58,23 @@ func select_random_word() -> String:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if Input.is_action_just_pressed("delete"): 
+		remove_last_letter()
+	if Input.is_action_just_pressed("enter"):
+		check_answer()
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("click"):
 		$playButton/CollisionShape2D.disabled = true
+		$playButton/ButtonAnimation.play("play")
 		$esceneAnimations.play("start_play")
 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 	$Camera2D.position.x = 2880
 	$coAnimations.play("end_animation")
-	var my_word = select_random_word()
-	generate_words_pool(my_word)
-	gen_text_underscore(my_word)
+	current_word = select_random_word().to_upper()
+	generate_words_pool(current_word)
+	gen_text_underscore(current_word)
 	
 func generate_words_pool(word: String) -> void:
 	var word_pool = []
@@ -70,31 +82,83 @@ func generate_words_pool(word: String) -> void:
 		word_pool.append(l)
 	
 	var alphabet := "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
-	while word_pool.size() < 12:
+	while word_pool.size() < max_word_pool_size:
 		var random_letter = alphabet[randi() % alphabet.length()]
 		if not word_pool.has(random_letter):
 			word_pool.append(random_letter)
+			
+	for i in range(word_pool.size()):
+		word_pool[i] = word_pool[i].to_upper()
 
 	word_pool.shuffle()
 
 	print("Pool de letras: ", word_pool)
 
 	for i in word_pool.size():
-		create_letter_label(word_pool[i], i)
+		create_letter_button(word_pool[i], i)
 
 func gen_text_underscore(word: String) -> void:
 	var start_x = 2304
 	var y = 500
 	var spacing = 80
 
+	answer_slot.clear()
+	slot_nodes.clear()
+
 	for i in word.length():
+		answer_slot.append("")
+
 		var my_asset = underscore.instantiate()
 		my_asset.position = Vector2(start_x + i * spacing, y)
 		add_child(my_asset)
+
+		var label = Label.new()
+		label.text = "_"
+		label.position = Vector2(start_x + i * spacing, y - 70)
+		label.add_theme_font_size_override("font_size", 48)
+		add_child(label)
+
+		slot_nodes.append(label)
 		
-func create_letter_label(letter: String, index: int) -> void:
-	var label = Label.new()
-	label.text = letter
-	label.position = Vector2(2304 + (index % 6) * 100, 700 + int(index / 6) * 80)
-	label.add_theme_font_size_override("font_size", 48)
-	add_child(label)
+func create_letter_button(letter: String, index: int) -> void:
+	var button = Button.new()
+	button.text = letter.to_upper()
+	button.position = Vector2(2304 + (index % 6) * 100, 700 + int(index / 6) * 80)
+	button.add_theme_font_size_override("font_size", 32)
+	add_child(button)
+
+	button.pressed.connect(func():
+		_on_letter_pressed(button)
+	)
+	
+func _on_letter_pressed(button: Button) -> void:
+	var letter = button.text
+
+	for i in answer_slot.size():
+		if answer_slot[i] == "":
+			answer_slot[i] = letter
+			slot_nodes[i].text = letter
+			used_buttons.append(button)
+			button.disabled = true
+			break
+			
+func remove_last_letter() -> void:
+	for i in range(answer_slot.size() - 1, -1, -1):
+		if answer_slot[i] != "":
+			answer_slot[i] = ""
+			slot_nodes[i].text = "_"
+
+			var button = used_buttons.pop_back()
+			button.disabled = false
+			break
+			
+func check_answer() -> void:
+	var player_word = ""
+
+	for letter in answer_slot:
+		player_word += letter
+
+	if player_word == current_word.to_upper():
+		print("Correcto")
+	else:
+		print("Incorrecto")
