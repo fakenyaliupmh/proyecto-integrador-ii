@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b2lfh2vt6ljob"]
+
+[ext_resource type="Texture2D" uid="uid://dbcdeffmawf2" path="res://wireframes/text_underscore.png" id="1_hdvxs"]
+
+[node name="Node2D" type="Node2D" unique_id=848420546]
+
+[node name="TextUnderscore" type="Sprite2D" parent="." unique_id=955714405]
+position = Vector2(28.000002, 5.75)
+scale = Vector2(1.4000001, 0.7)
+texture = ExtResource("1_hdvxs")

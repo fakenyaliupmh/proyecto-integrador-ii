@@ -3,10 +3,8 @@
 ## Integrantes del equipo
 
 * Guzman Contreras Erick Zahid
-* name_01: Alex
-* name_02
-* name_03: Josu
-* Nyali Tzel
+* Alex
+* Josu
 
 ## To Do
 
@@ -14,21 +12,21 @@
 
 * [x] Crear pantalla de inicio
 * [x] Crear botón Play
-* [ ] Conectar botón Play con pantalla de juego
+* [x] Conectar botón Play con pantalla de juego
 * [x] Crear wireframe de fondo y botón
 
 ### Pantalla de juego
 
-* [ ] Crear pantalla de juego
+* [x] Crear pantalla de juego
 * [ ] Mostrar imagen de la palabra
 * [ ] Mostrar palabra incompleta
-* [ ] Mostrar pool de letras
+* [x] Mostrar pool de letras
 * [ ] Mecánica para completar la palabra
 
 ### Mecánicas del juego
 
-* [ ] Crear pool de palabras
-* [ ] Elegir palabra
+* [x] Crear pool de palabras
+* [x] Elegir palabra
 * [ ] Generar palabra incompleta
 * [ ] Verificar palabra completada
 * [ ] Avanzar si la palabra es correcta (Y sumar un punto)
