@@ -47,6 +47,7 @@ func select_random_word() -> String:
 	print(words[clave_random])
 	return words[clave_random]
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
