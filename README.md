@@ -21,13 +21,13 @@
 * [ ] Mostrar imagen de la palabra
 * [ ] Mostrar palabra incompleta
 * [x] Mostrar pool de letras
-* [ ] Mecánica para completar la palabra
+* [x] Mecánica para completar la palabra
 
 ### Mecánicas del juego
 
 * [x] Crear pool de palabras
 * [x] Elegir palabra
 * [ ] Generar palabra incompleta
-* [ ] Verificar palabra completada
+* [x] Verificar palabra completada
 * [ ] Avanzar si la palabra es correcta (Y sumar un punto)
 * [ ] Volver al menú si la palabra es incorrecta

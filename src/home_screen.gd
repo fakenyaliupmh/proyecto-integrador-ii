@@ -1,17 +1,14 @@
 extends Node2D
 
-const underscore = preload("res://src/underscore.tscn")
-const max_word_pool_size = 12
-const screen_width = 1920
-const screen_height = 1080
-const screen_size = [screen_width, screen_height]
+const SCREEN_WIDTH = 1920
+const SCREEN_HEIGHT = 1080
+const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-var current_word = ""
-var answer_slot = []
-var slot_nodes = []
-var used_buttons = []
+var current_word: String = ""
+var current_scene = preload("res://scenes/test_scene.tscn")
+var current_scene_instance: Node = null
+var current_game: CompleteWordGame = null
 
-#Diccionario de palabras
 var words = {
 	"word_1" : "Casa",
 	"word_2" : "Perro",
@@ -45,21 +42,9 @@ var words = {
 	"word_30" : "Globo"
 }
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#var game = CompeteWordGame.new()
-	#game.word = "Hola"
 	pass
 
-#Función prara seleccionar la palabra
-func select_random_word() -> String:
-	var claves = words.keys()
-	var clave_random = claves[randi()% claves.size()]
-	print(words[clave_random])
-	return words[clave_random]
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
@@ -70,13 +55,37 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 		$esceneAnimations.play("start_play")
 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
-	$Camera2D.position.x = 2880
-	$coAnimations.play("end_animation")
-	
+	if anim_name == "start_play":
+		next_round()
+
+func _on_word_completed() -> void:
+	next_round()
+
+
+func select_random_word() -> String:
+	var keys = words.keys()
+	var random_keys = keys[randi()% keys.size()]
+	print(words[random_keys])
+	return words[random_keys]
+
+func next_round():
+	if current_game:
+		current_game.queue_free()
+		current_game = null
+
+	if current_scene_instance:
+		current_scene_instance.queue_free()
+		current_scene_instance = null
+
+	current_scene_instance = current_scene.instantiate()
+	add_child(current_scene_instance)
+
+	if current_scene_instance.has_node("AnimationPlayer"):
+		current_scene_instance.get_node("AnimationPlayer").play("init_scene")
+
 	var word = select_random_word().to_upper()
-	var game = CompleteWordGame.new()
-	
-	game.setup(word, Vector2(screen_width, screen_height))
-	
-	add_child(game)
-	
+
+	current_game = CompleteWordGame.new()
+	current_game.setup(word, SCREEN_SIZE)
+	current_game.word_completed.connect(_on_word_completed)
+	add_child(current_game)
