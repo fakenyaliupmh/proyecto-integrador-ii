@@ -51,9 +51,9 @@ func generate_words_pool(word: String) -> void:
 		create_letter_button(word_pool[i], i)
 
 func gen_text_underscore(word: String) -> void:
-	var start_x = screen_size.x * 0.20
-	var y = screen_size.y * 0.46
-	var spacing = 80
+	var start_x = screen_size.x * 0.20 # Magic number
+	var y = screen_size.y * 0.46 # Magic number
+	var spacing = 80 # Magic number
 
 	answer_slot.clear()
 	slot_nodes.clear()
@@ -77,8 +77,8 @@ func create_letter_button(letter: String, index: int) -> void:
 	var button = Button.new()
 	button.text = letter.to_upper()
 	button.position = Vector2(
-		screen_size.x * 0.20 + (index % 6) * 100,
-		screen_size.y * 0.65 + int(index / 6) * 80
+		screen_size.x * 0.20 + (index % 6) * 100, # Magic number
+		screen_size.y * 0.65 + int(index / 6) * 80 # Magic number
 	)
 
 	button.add_theme_font_size_override("font_size", 32)

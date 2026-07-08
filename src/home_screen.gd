@@ -4,7 +4,7 @@ const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-var current_word = ""
+var current_word: String = ""
 var current_scene = preload("res://scenes/test_scene.tscn")
 var current_scene_instance: Node = null
 var current_game: CompleteWordGame = null
@@ -42,18 +42,9 @@ var words = {
 	"word_30" : "Globo"
 }
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
 
-#Función prara seleccionar la palabra
-func select_random_word() -> String:
-	var keys = words.keys()
-	var random_keys = keys[randi()% keys.size()]
-	print(words[random_keys])
-	return words[random_keys]
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
@@ -66,10 +57,17 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "start_play":
 		next_round()
-	
+
 func _on_word_completed() -> void:
 	next_round()
-	
+
+
+func select_random_word() -> String:
+	var keys = words.keys()
+	var random_keys = keys[randi()% keys.size()]
+	print(words[random_keys])
+	return words[random_keys]
+
 func next_round():
 	if current_game:
 		current_game.queue_free()
