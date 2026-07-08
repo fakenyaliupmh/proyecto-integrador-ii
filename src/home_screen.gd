@@ -59,6 +59,17 @@ func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 		next_round()
 
 func _on_word_completed() -> void:
+	if current_scene_instance.has_node("AnimationPlayer"):
+		current_scene_instance.get_node("AnimationPlayer").play("end_scene")
+
+	var tween = create_tween()
+
+	if current_game:
+		tween.parallel().tween_property(current_game, "modulate:a", 0.0, 1.0)
+		tween.parallel().tween_interval(1.5)
+
+	await tween.finished
+
 	next_round()
 
 

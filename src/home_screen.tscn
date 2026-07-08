@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_67g1r"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="2_w8yt5"]
 [ext_resource type="Texture2D" uid="uid://cjotvc46df3jq" path="res://assets/sprites/spritesheet.png" id="3_abx78"]
+[ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="4_w8yt5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
@@ -43,43 +44,6 @@ _data = {
 &"play": SubResource("Animation_ddxy4")
 }
 
-[sub_resource type="Animation" id="Animation_w43ym"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../meltDown2:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_ma67i"]
-resource_name = "end_animation"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../meltDown2:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 1), Color(0.011764706, 0.011764706, 0.011764706, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_cbsbc"]
-_data = {
-&"RESET": SubResource("Animation_w43ym"),
-&"end_animation": SubResource("Animation_ma67i")
-}
-
 [sub_resource type="Animation" id="Animation_w8yt5"]
 length = 0.001
 tracks/0/type = "value"
@@ -94,36 +58,10 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0.011764706, 0.011764706, 0.011764706, 0)]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("meltDown2:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_hdyla"]
-resource_name = "end_animation"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("meltDown2:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 1), Color(0.011764706, 0.011764706, 0.011764706, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_44cor"]
 resource_name = "start_play"
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -140,19 +78,20 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w43ym"]
 _data = {
 &"RESET": SubResource("Animation_w8yt5"),
-&"end_animation": SubResource("Animation_hdyla"),
 &"start_play": SubResource("Animation_44cor")
 }
 
-[node name="Node2D" type="Node2D" unique_id=1862836571]
+[node name="HomeScreen" type="Node2D" unique_id=1862836571]
 script = ExtResource("1_67g1r")
 
-[node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
-position = Vector2(960, 540)
-texture = ExtResource("2_w8yt5")
+[node name="Proyecto(20260706032833)" type="Sprite2D" parent="." unique_id=54875038]
+modulate = Color(0.53692776, 0.53692776, 0.53692776, 1)
+position = Vector2(947, 279)
+texture = ExtResource("4_w8yt5")
 
-[node name="Stage01Screen" type="Sprite2D" parent="." unique_id=1244286745]
-position = Vector2(2880, 540)
+[node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
+visible = false
+position = Vector2(960, 540)
 texture = ExtResource("2_w8yt5")
 
 [node name="playButton" type="Area2D" parent="." unique_id=999107888]
@@ -178,21 +117,12 @@ limit_left = 0
 limit_top = 0
 limit_bottom = 1080
 
-[node name="coAnimations" type="AnimationPlayer" parent="." unique_id=119022919]
-root_node = NodePath("../esceneAnimations")
-libraries/ = SubResource("AnimationLibrary_cbsbc")
-
 [node name="esceneAnimations" type="AnimationPlayer" parent="." unique_id=303681550]
 libraries/ = SubResource("AnimationLibrary_w43ym")
 
 [node name="meltDown" type="Sprite2D" parent="." unique_id=179219610]
 modulate = Color(0.011764706, 0.011764706, 0.011764706, 0)
 position = Vector2(960, 540)
-texture = ExtResource("2_w8yt5")
-
-[node name="meltDown2" type="Sprite2D" parent="." unique_id=1491338729]
-modulate = Color(0.011764706, 0.011764706, 0.011764706, 1)
-position = Vector2(2880, 540)
 texture = ExtResource("2_w8yt5")
 
 [connection signal="input_event" from="playButton" to="." method="_on_area_2d_input_event"]
