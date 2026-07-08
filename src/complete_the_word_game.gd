@@ -1,5 +1,6 @@
 extends Node
 class_name CompleteWordGame
+signal word_completed
 
 const UNDERSCORE = preload("res://src/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
@@ -11,9 +12,16 @@ var answer_slot: Array[String] = []
 var slot_nodes: Array[Label] = []
 var used_buttons: Array[Button] = []
 
-func setup(word: String, new_screen_size: Vector2) -> void:
+func setup(word: String, new_screen_size: Vector2, sprite_texture: Texture2D = null) -> void:
 	self.current_word = word
 	self.screen_size = new_screen_size
+	
+	if sprite_texture:
+		var sprite = Sprite2D.new()
+		sprite.texture = sprite_texture
+		sprite.position = Vector2(screen_size.x * 1.5, screen_size.y * 0.3)
+		add_child(sprite)
+		
 	generate_words_pool(current_word)
 	gen_text_underscore(current_word)
 
@@ -43,7 +51,7 @@ func generate_words_pool(word: String) -> void:
 		create_letter_button(word_pool[i], i)
 
 func gen_text_underscore(word: String) -> void:
-	var start_x = screen_size.x * 1.20
+	var start_x = screen_size.x * 0.20
 	var y = screen_size.y * 0.46
 	var spacing = 80
 
@@ -69,7 +77,7 @@ func create_letter_button(letter: String, index: int) -> void:
 	var button = Button.new()
 	button.text = letter.to_upper()
 	button.position = Vector2(
-		screen_size.x * 1.20 + (index % 6) * 100,
+		screen_size.x * 0.20 + (index % 6) * 100,
 		screen_size.y * 0.65 + int(index / 6) * 80
 	)
 
@@ -104,13 +112,14 @@ func remove_last_letter() -> void:
 			button.disabled = false
 			break
 
-func check_answer() -> void:
-	var player_word = ""
+func check_answer() -> bool:
+	var player_word := ""
 
 	for letter in answer_slot:
 		player_word += letter
 
 	if player_word == current_word:
-		print("Correcto")
-	else:
-		print("Incorrecto")
+		word_completed.emit()
+		return true
+
+	return false
