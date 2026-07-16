@@ -5,9 +5,16 @@ const SCREEN_HEIGHT = 1080
 const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 var current_word: String = ""
+var background_stack: Array = [
+	preload("res://assets/wallpaper/fondo (20260706031742).png"),
+	preload("res://assets/wallpaper/Proyecto (20260706032907).png"),
+	preload("res://assets/wallpaper/Proyecto (20260706032833).png"),
+]
+
 var current_scene = preload("res://scenes/test_scene.tscn")
 var current_scene_instance: Node = null
 var current_game: CompleteWordGame = null
+
 
 var words = {
 	"word_1" : "Casa",
@@ -100,3 +107,6 @@ func next_round():
 	current_game.setup(word, SCREEN_SIZE)
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
+
+func generate_new_scene() -> void:
+	pass

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bhsfha8mrnhsg"]
 
-[ext_resource type="PackedScene" uid="uid://b2lfh2vt6ljob" path="res://src/underscore.tscn" id="1_bhp5d"]
+[ext_resource type="PackedScene" uid="uid://b2lfh2vt6ljob" path="res://scenes/underscore.tscn" id="1_bhp5d"]
 [ext_resource type="Script" uid="uid://dlthng2ubht2o" path="res://src/Underscore.gd" id="2_bhp5d"]
 
 [node name="Node2D" unique_id=848420546 instance=ExtResource("1_bhp5d")]

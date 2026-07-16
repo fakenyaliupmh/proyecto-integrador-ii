@@ -2,7 +2,7 @@ extends Node2D
 class_name CompleteWordGame
 signal word_completed
 
-const UNDERSCORE = preload("res://src/underscore.tscn")
+const UNDERSCORE = preload("res://scenes/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
 
 var current_word: String = ""
@@ -12,11 +12,13 @@ var answer_slot: Array[String] = []
 var slot_nodes: Array[Label] = []
 var used_buttons: Array[Button] = []
 
+var attemps = 0
+
 func setup(word: String, new_screen_size: Vector2, sprite_texture: Texture2D = null) -> void:
 	self.current_word = word
 	self.screen_size = new_screen_size
 	
-	modulate.a = 0.0
+	modulate.a = 0.0 # Magic number
 	
 	if sprite_texture:
 		var sprite = Sprite2D.new()
@@ -26,15 +28,55 @@ func setup(word: String, new_screen_size: Vector2, sprite_texture: Texture2D = n
 		
 	generate_words_pool(current_word)
 	gen_text_underscore(current_word)
+	create_check_button()
 	
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1.0, 1.0)
+	
+func create_check_button() -> void:
+	var button = Button.new()
+	button.text = "-->"
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("delete"):
-		remove_last_letter()
-	if Input.is_action_just_pressed("enter"):
-		check_answer()
+	button.position = Vector2(
+		screen_size.x - 250, # Magic number
+		screen_size.y - 120 # Magic number
+	)
+	button.add_theme_font_size_override("font_size", 32) # Magic number
+	button.add_theme_color_override("font_color", Color(0.123, 0.118, 0.104, 1.0))
+	button.size = Vector2(200,80) # Magic number
+
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.0, 0.708, 0.348, 1.0)
+	style.corner_radius_top_left = 12 # Magic number
+	style.corner_radius_top_right = 12 # Magic number
+	style.corner_radius_bottom_left = 12 # Magic number
+	style.corner_radius_bottom_right = 12 # Magic number
+	button.add_theme_stylebox_override("normal", style)
+
+	add_child(button)
+
+	button.pressed.connect(check_answer)
+
+func _input(event) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_BACKSPACE:
+			remove_last_letter()
+			return
+
+		if event.keycode == KEY_ENTER:
+			check_answer()
+			return
+
+		var text = event.as_text().to_upper()
+
+		if text.length() != 1: # Magic number
+			return
+
+		for child in get_children():
+			if child is Button:
+				if child.text == text and !child.disabled:
+					_on_letter_pressed(child)
+					break
 
 func generate_words_pool(word: String) -> void:
 	var word_pool: Array[String] = []
@@ -85,7 +127,7 @@ func create_letter_button(letter: String, index: int) -> void:
 		screen_size.y * 0.50 + int(index / 6) * 80 # Magic number
 	)
 
-	button.add_theme_font_size_override("font_size", 32)
+	button.add_theme_font_size_override("font_size", 32) # Magic number
 	add_child(button)
 
 	button.pressed.connect(func():
@@ -93,7 +135,7 @@ func create_letter_button(letter: String, index: int) -> void:
 	)
 
 func _on_letter_pressed(button: Button) -> void:
-	var letter := button.text
+	var letter = button.text
 
 	for i in range(answer_slot.size()):
 		if answer_slot[i] == "":
@@ -126,4 +168,26 @@ func check_answer() -> bool:
 		word_completed.emit()
 		return true
 
+	attemps += 1 # Magic number
+	
+	if attemps >= 5: # Magic number
+		complete_word()
+		return true
 	return false
+
+func reveal_random_letter() -> void:
+	pass
+
+func complete_word() -> void:
+	for i in range(current_word.length()):
+		answer_slot[i] = current_word[i]
+		slot_nodes[i].text = current_word[i]
+	
+	await get_tree().create_timer(1.5).timeout # Magic number
+	word_completed.emit()
+	
+func incorrect_animation() -> void:
+	pass
+		
+func correct_animation() -> void:
+	pass

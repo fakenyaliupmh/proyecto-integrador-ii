@@ -29,5 +29,5 @@
 * [x] Elegir palabra
 * [ ] Generar palabra incompleta
 * [x] Verificar palabra completada
-* [ ] Avanzar si la palabra es correcta (Y sumar un punto)
+* [x] Avanzar si la palabra es correcta (Y sumar un punto)
 * [ ] Volver al menú si la palabra es incorrecta
