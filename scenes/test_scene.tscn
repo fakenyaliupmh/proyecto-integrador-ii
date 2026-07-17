@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://dbmdut2kas2ep" path="res://src/test_scene.gd" id="1_7ddre"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="1_g7g4h"]
 [ext_resource type="Texture2D" uid="uid://bgtr8x1crcv3l" path="res://assets/wallpaper/Proyecto (20260706032907).png" id="1_nd71p"]
-[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/spritesheet(1).png" id="2_j8ivh"]
+[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/ajolote.png" id="2_j8ivh"]
+[ext_resource type="Texture2D" uid="uid://d3xhbl0ea06b8" path="res://assets/sprites/dragon.png" id="5_qjeyg"]
 
 [sub_resource type="Animation" id="Animation_j8ivh"]
 length = 0.001
@@ -152,5 +153,11 @@ position = Vector2(486, 505)
 scale = Vector2(0.566875, 0.566875)
 texture = ExtResource("2_j8ivh")
 hframes = 4
+
+[node name="SpriteSheet" type="Sprite2D" parent="." unique_id=977870639]
+position = Vector2(-611.00006, 441)
+scale = Vector2(0.5964401, 0.59644014)
+texture = ExtResource("5_qjeyg")
+hframes = 5
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

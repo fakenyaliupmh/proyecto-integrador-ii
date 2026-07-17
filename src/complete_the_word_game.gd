@@ -4,25 +4,41 @@ signal word_completed
 
 const UNDERSCORE = preload("res://scenes/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
+var screen_size: Vector2 = Vector2.ZERO
 
 var current_word: String = ""
-var screen_size: Vector2 = Vector2.ZERO
+var word_sprite: Texture2D = null
+
+var current_character: Texture2D = null
+var current_bg: Texture2D = null
 
 var answer_slot: Array[String] = []
 var slot_nodes: Array[Label] = []
 var used_buttons: Array[Button] = []
 
+var stop: bool = false
+
 var attemps = 0
 
-func setup(word: String, new_screen_size: Vector2, sprite_texture: Texture2D = null) -> void:
-	self.current_word = word
+func setup(word: Dictionary,
+		new_screen_size: Vector2,
+		character: Texture2D = null,
+		bg: Texture2D = null
+	) -> void:
+
 	self.screen_size = new_screen_size
+	self.current_character = character
+
+	self.current_word = word.keys()[0].to_upper()
+	self.word_sprite = word.values()[0]
+	
+	self.current_bg = bg
 	
 	modulate.a = 0.0 # Magic number
 	
-	if sprite_texture:
+	if character:
 		var sprite = Sprite2D.new()
-		sprite.texture = sprite_texture
+		sprite.texture = character
 		sprite.position = Vector2(screen_size.x * 1.5, screen_size.y * 0.3)
 		add_child(sprite)
 		
@@ -58,6 +74,9 @@ func create_check_button() -> void:
 	button.pressed.connect(check_answer)
 
 func _input(event) -> void:
+	if stop:
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_BACKSPACE:
 			remove_last_letter()
@@ -159,6 +178,7 @@ func remove_last_letter() -> void:
 			break
 
 func check_answer() -> bool:
+	self.stop = true
 	var player_word = ""
 
 	for letter in answer_slot:
@@ -166,13 +186,16 @@ func check_answer() -> bool:
 
 	if player_word == current_word:
 		word_completed.emit()
+		self.stop = false
 		return true
 
 	attemps += 1 # Magic number
 	
 	if attemps >= 5: # Magic number
 		complete_word()
+		self.stop = false
 		return true
+	self.stop = false
 	return false
 
 func reveal_random_letter() -> void:
