@@ -4,11 +4,10 @@ signal word_completed
 
 const UNDERSCORE = preload("res://scenes/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
-var screen_size: Vector2 = Vector2.ZERO
 
+var screen_size: Vector2 = Vector2.ZERO
 var current_word: String = ""
 var word_sprite: Texture2D = null
-
 var current_character: Texture2D = null
 var current_bg: Texture2D = null
 
@@ -19,59 +18,6 @@ var used_buttons: Array[Button] = []
 var stop: bool = true
 
 var attemps = 0
-
-func setup(
-		word: Dictionary,
-		new_screen_size: Vector2,
-		character: Texture2D = null,
-		bg: Texture2D = null
-	) -> void:
-
-	self.screen_size = new_screen_size
-	self.current_character = character
-	self.current_bg = bg
-
-	self.current_word = word["word"].to_upper()
-	self.word_sprite = word["sprite"]
-
-	modulate.a = 0.0 # Magic number
-	
-	if character:
-		var sprite = Sprite2D.new()
-		sprite.texture = character
-		sprite.position = Vector2(screen_size.x * 1.5, screen_size.y * 0.3)
-		add_child(sprite)
-		
-	generate_words_pool(current_word)
-	gen_text_underscore(current_word)
-	create_check_button()
-	
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 1.0)
-	
-func create_check_button() -> void:
-	var button = Button.new()
-	button.text = "-->"
-
-	button.position = Vector2(
-		screen_size.x - 250, # Magic number
-		screen_size.y - 120 # Magic number
-	)
-	button.add_theme_font_size_override("font_size", 32) # Magic number
-	button.add_theme_color_override("font_color", Color(0.123, 0.118, 0.104, 1.0))
-	button.size = Vector2(200,80) # Magic number
-
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.0, 0.708, 0.348, 1.0)
-	style.corner_radius_top_left = 12 # Magic number
-	style.corner_radius_top_right = 12 # Magic number
-	style.corner_radius_bottom_left = 12 # Magic number
-	style.corner_radius_bottom_right = 12 # Magic number
-	button.add_theme_stylebox_override("normal", style)
-
-	add_child(button)
-
-	button.pressed.connect(check_answer)
 
 func _input(event) -> void:
 	if stop:
@@ -96,6 +42,57 @@ func _input(event) -> void:
 				if child.text == text and !child.disabled:
 					_on_letter_pressed(child)
 					break
+
+func setup(
+		word: Dictionary,
+		new_screen_size: Vector2,
+		character: Texture2D = null,
+		bg: Texture2D = null
+	) -> void:
+
+	self.screen_size = new_screen_size
+	self.current_character = character
+	self.current_bg = bg
+
+	self.current_word = word["word"].to_upper()
+	self.word_sprite = word["sprite"]
+
+	modulate.a = 0.0 # Magic number
+
+	set_background()
+	set_word_sprite()
+	set_character()
+	
+	generate_words_pool(current_word)
+	gen_text_underscore(current_word)
+	create_check_button()
+
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 1.0, 1.0)
+
+func create_check_button() -> void:
+	var button = Button.new()
+	button.text = "-->"
+
+	button.position = Vector2(
+		screen_size.x - 250, # Magic number
+		screen_size.y - 120 # Magic number
+	)
+	button.add_theme_font_size_override("font_size", 32) # Magic number
+	button.add_theme_color_override("font_color", Color(0.123, 0.118, 0.104, 1.0))
+	button.size = Vector2(200,80) # Magic number
+
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.0, 0.708, 0.348, 1.0)
+	style.corner_radius_top_left = 12 # Magic number
+	style.corner_radius_top_right = 12 # Magic number
+	style.corner_radius_bottom_left = 12 # Magic number
+	style.corner_radius_bottom_right = 12 # Magic number
+	button.add_theme_stylebox_override("normal", style)
+
+	add_child(button)
+
+	button.pressed.connect(check_answer)
 
 func generate_words_pool(word: String) -> void:
 	var word_pool: Array[String] = []
@@ -137,6 +134,109 @@ func gen_text_underscore(word: String) -> void:
 		add_child(label)
 
 		slot_nodes.append(label)
+
+func set_background() -> void:
+	if current_bg == null:
+		return
+	
+	var bg_node = Sprite2D.new()
+	bg_node.name = "Background"
+	bg_node.texture = current_bg
+	bg_node.position = screen_size * 0.5
+	bg_node.z_index = 0
+
+	var texture_size = current_bg.get_size()
+
+	if texture_size.x > 0.0 and texture_size.y > 0.0:
+		var scale_factor = max(
+			screen_size.x / texture_size.x,
+			screen_size.y / texture_size.y
+		)
+
+		bg_node.scale = Vector2.ONE * scale_factor
+		bg_node.modulate = bg_node.modulate.darkened(0.65)
+
+	add_child(bg_node)
+
+func set_word_sprite() -> void:
+	if word_sprite == null:
+		return
+
+	var word_sprite_node = AnimatedSprite2D.new()
+	
+	word_sprite_node.name = "WordSprite"
+	word_sprite_node.position = Vector2(
+		screen_size.x * 0.25,
+		screen_size.y * 0.30
+	)
+	word_sprite_node.scale = Vector2(0.35, 0.35)
+	word_sprite_node.z_index = 1
+
+	var frames = SpriteFrames.new()
+	frames.remove_animation("default")
+	frames.add_animation("idle")
+	frames.set_animation_loop("idle", true)
+	frames.set_animation_speed("idle", 6.0)
+
+	var frame_width = word_sprite.get_width() / 3
+	var frame_height = word_sprite.get_height() / 2
+
+	for row in range(2):
+		for column in range(3):
+			var atlas_texture = AtlasTexture.new()
+			atlas_texture.atlas = word_sprite
+			atlas_texture.region = Rect2(
+				column * frame_width,
+				row * frame_height,
+				frame_width,
+				frame_height
+			)
+
+			frames.add_frame("idle", atlas_texture)
+
+	word_sprite_node.sprite_frames = frames
+	add_child(word_sprite_node)
+	word_sprite_node.play("idle")
+
+func set_character() -> void:
+	if current_character == null:
+		return
+
+	var character_sprite_node = AnimatedSprite2D.new()
+	
+	character_sprite_node.name = "CharacterSprite"
+	character_sprite_node.position = Vector2(
+		screen_size.x * 0.15,
+		screen_size.y * 0.80
+	)
+	character_sprite_node.scale = Vector2(0.3, 0.3)
+	character_sprite_node.z_index = 2
+
+	var frames = SpriteFrames.new()
+	frames.remove_animation("default")
+	frames.add_animation("idle")
+	frames.set_animation_loop("idle", true)
+	frames.set_animation_speed("idle", 2.0)
+
+	var columns = 4
+	var frame_width = current_character.get_width() / columns
+	var frame_height = current_character.get_height()
+
+	for i in range(4):
+		var atlas_texture = AtlasTexture.new()
+		atlas_texture.atlas = current_character
+		atlas_texture.region = Rect2(
+			i * frame_width,
+			0,
+			frame_width,
+			frame_height
+		)
+
+		frames.add_frame("idle", atlas_texture)
+
+	character_sprite_node.sprite_frames = frames
+	add_child(character_sprite_node)
+	character_sprite_node.play("idle")
 
 func create_letter_button(letter: String, index: int) -> void:
 	var button = Button.new()

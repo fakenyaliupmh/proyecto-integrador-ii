@@ -4,10 +4,6 @@ const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-var current_word: Dictionary = {}
-
-var current_scene = preload("res://scenes/test_scene.tscn")
-var current_scene_instance: Node = null
 var current_game: CompleteWordGame = null
 
 var characters: Array = [
@@ -99,7 +95,7 @@ var words = [
 	#	"sprite": preload("res://assets/words/arbol.png")
 	#},
 	{
-		"word": "coche",
+		"word": "carro",
 		"sprite": preload("res://assets/words/carro.png")
 	},
 	{
@@ -157,50 +153,48 @@ func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 		next_round()
 
 func _on_word_completed() -> void:
-	if current_scene_instance.has_node("AnimationPlayer"):
-		current_scene_instance.get_node("AnimationPlayer").play("end_scene")
+	if not is_instance_valid(current_game):
+		return
+
+	current_game.stop = true
 
 	var tween = create_tween()
-
-	if current_game:
-		tween.parallel().tween_property(current_game, "modulate:a", 0.0, 1.0)
-		tween.parallel().tween_interval(1.5)
+	tween.tween_property(
+		current_game,
+		"modulate:a",
+		0.0,
+		1.0
+	)
 
 	await tween.finished
-
 	next_round()
-
 
 func select_random_word() -> Dictionary:
 	var my_dict = words.pick_random()
-	print(my_dict)
 	return my_dict
 
-func next_round():
-	if current_game:
+func next_round() -> void:
+	if is_instance_valid(current_game):
 		current_game.queue_free()
-		current_game = null
 
-	if current_scene_instance:
-		current_scene_instance.queue_free()
-		current_scene_instance = null
+	current_game = null
 
-	current_scene_instance = current_scene.instantiate()
-	add_child(current_scene_instance)
-
-	if current_scene_instance.has_node("AnimationPlayer"):
-		current_scene_instance.get_node("AnimationPlayer").play("init_scene")
-
-	var word = select_random_word()
-
-	current_game = CompleteWordGame.new()
-	current_game.setup(word,
-				SCREEN_SIZE,
-				characters.pick_random(),
-				background_stack.pick_random())
-	current_game.word_completed.connect(_on_word_completed)
-	add_child(current_game)
-	current_game.stop = false
+	generate_new_scene()
 
 func generate_new_scene() -> void:
-	pass
+	var word: Dictionary = select_random_word()
+	var character: Texture2D = characters.pick_random()
+	var background: Texture2D = background_stack.pick_random()
+
+	current_game = CompleteWordGame.new()
+	current_game.word_completed.connect(_on_word_completed)
+	add_child(current_game)
+
+	current_game.setup(
+		word,
+		SCREEN_SIZE,
+		character,
+		background
+	)
+
+	current_game.stop = false
