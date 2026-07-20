@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmbfefy3hrpmj"
-path="res://.godot/imported/ajolote.png-82ff772118ea0cbaa305c72e837d826c.ctex"
+uid="uid://c813djkrxln7w"
+path="res://.godot/imported/arbol.png-b297e337f5b36427036e1b4be2deb788.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ajolote.png"
-dest_files=["res://.godot/imported/ajolote.png-82ff772118ea0cbaa305c72e837d826c.ctex"]
+source_file="res://assets/words/arbol.png"
+dest_files=["res://.godot/imported/arbol.png-b297e337f5b36427036e1b4be2deb788.ctex"]
 
 [params]
 

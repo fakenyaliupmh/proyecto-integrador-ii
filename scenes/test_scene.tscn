@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbmdut2kas2ep" path="res://src/test_scene.gd" id="1_7ddre"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="1_g7g4h"]
-[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/ajolote.png" id="2_j8ivh"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ajolote.png" id="2_j8ivh"]
 
 [sub_resource type="Animation" id="Animation_j8ivh"]
 length = 0.5
@@ -131,8 +131,14 @@ position = Vector2(960, 540)
 scale = Vector2(1.0000001, 1.0000001)
 texture = ExtResource("1_g7g4h")
 
+[node name="Spritesheet(1)" type="Sprite2D" parent="." unique_id=1662945507]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(486, 505)
+scale = Vector2(0.566875, 0.566875)
+texture = ExtResource("2_j8ivh")
+hframes = 4
+
 [node name="melt" type="Sprite2D" parent="." unique_id=1524428423]
-visible = false
 modulate = Color(0.012617188, 0.012617188, 0.012617188, 1)
 position = Vector2(960, 540)
 texture = ExtResource("1_g7g4h")
@@ -140,12 +146,5 @@ texture = ExtResource("1_g7g4h")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1545101385]
 libraries/ = SubResource("AnimationLibrary_7ddre")
 autoplay = &"sprite_tmp"
-
-[node name="Spritesheet(1)" type="Sprite2D" parent="." unique_id=1662945507]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(486, 505)
-scale = Vector2(0.566875, 0.566875)
-texture = ExtResource("2_j8ivh")
-hframes = 4
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3xhbl0ea06b8"
-path="res://.godot/imported/dragon.png-391b9c1627f972852881ec75f6acfe13.ctex"
+uid="uid://ed7lvqp3f2t0"
+path="res://.godot/imported/flor.png-0a41d5797535e3f8d76bd50051916e62.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/dragon.png"
-dest_files=["res://.godot/imported/dragon.png-391b9c1627f972852881ec75f6acfe13.ctex"]
+source_file="res://assets/words/flor.png"
+dest_files=["res://.godot/imported/flor.png-0a41d5797535e3f8d76bd50051916e62.ctex"]
 
 [params]
 

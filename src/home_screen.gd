@@ -11,8 +11,8 @@ var current_scene_instance: Node = null
 var current_game: CompleteWordGame = null
 
 var characters: Array = [
-	preload("res://assets/sprites/dragon.png"),
-	preload("res://assets/sprites/ajolote.png")
+	preload("res://assets/characters/dragon.png"),
+	preload("res://assets/characters/ajolote.png")
 ]
 
 var background_stack: Array = [
@@ -22,35 +22,122 @@ var background_stack: Array = [
 ]
 
 var words = [
-	{"Casa": preload("res://wireframes/words/w1.png")},
-	{"Perro": preload("res://wireframes/words/w1.png")},
-	{"Sol": preload("res://wireframes/words/w1.png")},
-	{"Luna": preload("res://wireframes/words/w1.png")},
-	{"Estrella": preload("res://wireframes/words/w1.png")},
-	{"Nube": preload("res://wireframes/words/w1.png")},
-	{"Arbol": preload("res://wireframes/words/w1.png")},
-	{"Flor": preload("res://wireframes/words/w1.png")},
-	{"Gato": preload("res://wireframes/words/w1.png")},
-	{"Pez": preload("res://wireframes/words/w2.png")},
-	{"Pajaro": preload("res://wireframes/words/w2.png")},
-	{"Mariposa": preload("res://wireframes/words/w2.png")},
-	{"Conejo": preload("res://wireframes/words/w2.png")},
-	{"Manzana": preload("res://wireframes/words/w2.png")},
-	{"Platano": preload("res://wireframes/words/w2.png")},
-	{"Helado": preload("res://wireframes/words/w2.png")},
-	{"Pastel": preload("res://wireframes/words/w2.png")},
-	{"Pelota": preload("res://wireframes/words/w2.png")},
-	{"Cometa": preload("res://wireframes/words/w2.png")},
-	{"Coche": preload("res://wireframes/words/w2.png")},
-	{"Bicicleta": preload("res://wireframes/words/w3.png")},
-	{"Barco": preload("res://wireframes/words/w3.png")},
-	{"Avion": preload("res://wireframes/words/w3.png")},
-	{"Corazon": preload("res://wireframes/words/w3.png")},
-	{"Corona": preload("res://wireframes/words/w3.png")},
-	{"Robot": preload("res://wireframes/words/w3.png")},
-	{"Dinosaurio": preload("res://wireframes/words/w3.png")},
-	{"Castillo": preload("res://wireframes/words/w3.png")},
-	{"Globo": preload("res://wireframes/words/w3.png")},
+	{
+		"word": "casa",
+		"sprite": preload("res://assets/words/casa.png")
+	},
+	{
+		"word": "perro",
+		"sprite": preload("res://assets/words/perro.png")
+	},
+	{
+		"word": "sol",
+		"sprite": preload("res://assets/words/sol.png")
+	},
+	{
+		"word": "luna",
+		"sprite": preload("res://assets/words/luna.png")
+	},
+	{
+		"word": "estrella",
+		"sprite": preload("res://assets/words/estrella.png")
+	},
+	{
+		"word": "nube",
+		"sprite": preload("res://assets/words/nube.png")
+	},
+	{
+		"word": "arbol",
+		"sprite": preload("res://assets/words/arbol.png")
+	},
+	{
+		"word": "flor",
+		"sprite": preload("res://assets/words/flor.png")
+	},
+	#{
+	#	"word": "gato",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "pez",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "pajaro",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "mariposa",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "conejo",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "manzana",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "platano",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "helado",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "pastel",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "pelota",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "cometa",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	{
+		"word": "coche",
+		"sprite": preload("res://assets/words/carro.png")
+	},
+	{
+		"word": "bicicleta",
+		"sprite": preload("res://assets/words/bicicleta.png")
+	},
+	{
+		"word": "barco",
+		"sprite": preload("res://assets/words/barco.png")
+	},
+	{
+		"word": "avion",
+		"sprite": preload("res://assets/words/avion.png")
+	},
+	{
+		"word": "corazon",
+		"sprite": preload("res://assets/words/corazon.png")
+	},
+	#{
+	#	"word": "corona",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "robot",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "dinosaurio",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "castillo",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
+	#{
+	#	"word": "globo",
+	#	"sprite": preload("res://assets/words/arbol.png")
+	#},
 ]
 
 func _ready() -> void:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8wpvftmuo7xy"
-path="res://.godot/imported/spritesheet.png-a800b538654c83c24a714b50cffb799a.ctex"
+uid="uid://yy5vcvjq6vqv"
+path="res://.godot/imported/ajolote.png-68fb22850dbc64a8128b6afb560bb801.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/spritesheet.png"
-dest_files=["res://.godot/imported/spritesheet.png-a800b538654c83c24a714b50cffb799a.ctex"]
+source_file="res://assets/characters/ajolote.png"
+dest_files=["res://.godot/imported/ajolote.png-68fb22850dbc64a8128b6afb560bb801.ctex"]
 
 [params]
 

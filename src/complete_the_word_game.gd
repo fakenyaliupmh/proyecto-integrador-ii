@@ -20,7 +20,8 @@ var stop: bool = true
 
 var attemps = 0
 
-func setup(word: Dictionary,
+func setup(
+		word: Dictionary,
 		new_screen_size: Vector2,
 		character: Texture2D = null,
 		bg: Texture2D = null
@@ -28,12 +29,11 @@ func setup(word: Dictionary,
 
 	self.screen_size = new_screen_size
 	self.current_character = character
-
-	self.current_word = word.keys()[0].to_upper()
-	self.word_sprite = word.values()[0]
-	
 	self.current_bg = bg
-	
+
+	self.current_word = word["word"].to_upper()
+	self.word_sprite = word["sprite"]
+
 	modulate.a = 0.0 # Magic number
 	
 	if character:
