@@ -142,6 +142,7 @@ libraries/ = SubResource("AnimationLibrary_7ddre")
 autoplay = &"sprite_tmp"
 
 [node name="Spritesheet(1)" type="Sprite2D" parent="." unique_id=1662945507]
+visible = false
 modulate = Color(1, 1, 1, 0)
 position = Vector2(486, 505)
 scale = Vector2(0.566875, 0.566875)

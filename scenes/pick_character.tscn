@@ -3,8 +3,122 @@
 [ext_resource type="Script" uid="uid://b5dduxvi174bw" path="res://pick_character.gd" id="1_01alm"]
 [ext_resource type="Texture2D" uid="uid://cdghfhmq0plba" path="res://assets/wallpaper/fondo (20260706031742).png" id="2_sk2q3"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_nc82p"]
+[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/ajolote.png" id="4_b4c7m"]
+[ext_resource type="Texture2D" uid="uid://d3xhbl0ea06b8" path="res://assets/sprites/dragon.png" id="5_ijh5o"]
 
-[node name="Node2D" type="Node2D" unique_id=1218347166]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4c7m"]
+atlas = ExtResource("5_ijh5o")
+region = Rect2(0, 0, 1920, 1243)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ijh5o"]
+atlas = ExtResource("5_ijh5o")
+region = Rect2(1920, 0, 1920, 1243)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3b66"]
+atlas = ExtResource("5_ijh5o")
+region = Rect2(3840, 0, 1920, 1243)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0m14y"]
+atlas = ExtResource("5_ijh5o")
+region = Rect2(5760, 0, 1920, 1243)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4igs"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(0, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqfyn"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(1600, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra7w3"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(3200, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbmi8"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(4800, 0, 1600, 1600)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4c7m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ijh5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3b66")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0m14y")
+}],
+"loop": 1,
+"name": &"dragon_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4igs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqfyn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ra7w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbmi8")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgy0e"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(0, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_330oh"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(1600, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g8xc4"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(3200, 0, 1600, 1600)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssy5s"]
+atlas = ExtResource("4_b4c7m")
+region = Rect2(4800, 0, 1600, 1600)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yf5fn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mgy0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_330oh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g8xc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssy5s")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="CharacterSelection" type="Control" unique_id=517168002]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_01alm")
 
 [node name="Fondo(20260706031742)" type="Sprite2D" parent="." unique_id=1543231183]
@@ -16,3 +130,35 @@ texture = ExtResource("2_sk2q3")
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=906792452]
 position = Vector2(960, 540)
 texture = ExtResource("3_nc82p")
+
+[node name="DragonButton" type="Button" parent="." unique_id=2116886198]
+layout_mode = 0
+offset_left = 213.0
+offset_top = 171.0
+offset_right = 415.0
+offset_bottom = 459.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="DragonButton" unique_id=1563520793]
+position = Vector2(112.999985, 144.00002)
+scale = Vector2(0.23343754, 0.23343754)
+sprite_frames = SubResource("SpriteFrames_g4v7s")
+animation = &"dragon_idle"
+autoplay = "dragon_idle"
+
+[node name="AjoloteButton" type="Button" parent="." unique_id=1749203389]
+layout_mode = 0
+offset_left = 617.0
+offset_top = 177.0
+offset_right = 817.0
+offset_bottom = 452.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AjoloteButton" unique_id=1406453394]
+position = Vector2(101.00003, 139.00002)
+scale = Vector2(0.2307924, 0.23079243)
+sprite_frames = SubResource("SpriteFrames_yf5fn")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.719239
+
+[connection signal="pressed" from="DragonButton" to="." method="_on_dragon_button_pressed"]
+[connection signal="pressed" from="AjoloteButton" to="." method="_on_ajolote_button_pressed"]
