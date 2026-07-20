@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://eiset787upbv"]
 
-[ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_67g1r"]
-[ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="2_w8yt5"]
-[ext_resource type="Texture2D" uid="uid://cjotvc46df3jq" path="res://assets/sprites/spritesheet.png" id="3_abx78"]
-[ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="4_w8yt5"]
+[ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_bie51"]
+[ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="2_ih2x6"]
+[ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_ked1l"]
+[ext_resource type="Texture2D" uid="uid://cjotvc46df3jq" path="res://assets/sprites/spritesheet.png" id="4_b02wa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
@@ -82,17 +82,17 @@ _data = {
 }
 
 [node name="HomeScreen" type="Node2D" unique_id=1862836571]
-script = ExtResource("1_67g1r")
+script = ExtResource("1_bie51")
 
 [node name="Proyecto(20260706032833)" type="Sprite2D" parent="." unique_id=54875038]
 modulate = Color(0.53692776, 0.53692776, 0.53692776, 1)
 position = Vector2(947, 279)
-texture = ExtResource("4_w8yt5")
+texture = ExtResource("2_ih2x6")
 
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
 visible = false
 position = Vector2(960, 540)
-texture = ExtResource("2_w8yt5")
+texture = ExtResource("3_ked1l")
 
 [node name="playButton" type="Area2D" parent="." unique_id=999107888]
 
@@ -103,7 +103,7 @@ shape = SubResource("CircleShape2D_w43ym")
 [node name="Spritesheet" type="Sprite2D" parent="playButton" unique_id=1739221291]
 position = Vector2(957.00006, 542)
 scale = Vector2(0.8526388, 0.8826389)
-texture = ExtResource("3_abx78")
+texture = ExtResource("4_b02wa")
 hframes = 5
 vframes = 4
 
@@ -123,7 +123,7 @@ libraries/ = SubResource("AnimationLibrary_w43ym")
 [node name="meltDown" type="Sprite2D" parent="." unique_id=179219610]
 modulate = Color(0.011764706, 0.011764706, 0.011764706, 0)
 position = Vector2(960, 540)
-texture = ExtResource("2_w8yt5")
+texture = ExtResource("3_ked1l")
 
 [connection signal="input_event" from="playButton" to="." method="_on_area_2d_input_event"]
 [connection signal="animation_finished" from="esceneAnimations" to="." method="_on_escene_animations_animation_finished"]

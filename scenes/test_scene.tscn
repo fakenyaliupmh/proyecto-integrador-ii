@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://cqjixkhil2mxh"]
 
-[ext_resource type="Script" uid="uid://dbmdut2kas2ep" path="res://scenes/test_scene.gd" id="1_7ddre"]
+[ext_resource type="Script" uid="uid://dbmdut2kas2ep" path="res://src/test_scene.gd" id="1_7ddre"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="1_g7g4h"]
-[ext_resource type="Texture2D" uid="uid://bgtr8x1crcv3l" path="res://assets/wallpaper/Proyecto (20260706032907).png" id="1_nd71p"]
-[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/spritesheet(1).png" id="2_j8ivh"]
+[ext_resource type="Texture2D" uid="uid://bmbfefy3hrpmj" path="res://assets/sprites/ajolote.png" id="2_j8ivh"]
 
 [sub_resource type="Animation" id="Animation_j8ivh"]
-length = 0.001
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -127,17 +126,13 @@ _data = {
 [node name="TestScene" type="Node2D" unique_id=750050060]
 script = ExtResource("1_7ddre")
 
-[node name="Proyecto(20260706032907)" type="Sprite2D" parent="." unique_id=1765207765]
-modulate = Color(0.6223983, 0.6223983, 0.6223983, 1)
-position = Vector2(943, 116)
-texture = ExtResource("1_nd71p")
-
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=1898862831]
-visible = false
 position = Vector2(960, 540)
+scale = Vector2(1.0000001, 1.0000001)
 texture = ExtResource("1_g7g4h")
 
 [node name="melt" type="Sprite2D" parent="." unique_id=1524428423]
+visible = false
 modulate = Color(0.012617188, 0.012617188, 0.012617188, 1)
 position = Vector2(960, 540)
 texture = ExtResource("1_g7g4h")

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cujvsi4vb26lb"]
+
+[ext_resource type="Script" uid="uid://b5dduxvi174bw" path="res://pick_character.gd" id="1_01alm"]
+[ext_resource type="Texture2D" uid="uid://cdghfhmq0plba" path="res://assets/wallpaper/fondo (20260706031742).png" id="2_sk2q3"]
+[ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_nc82p"]
+
+[node name="Node2D" type="Node2D" unique_id=1218347166]
+script = ExtResource("1_01alm")
+
+[node name="Fondo(20260706031742)" type="Sprite2D" parent="." unique_id=1543231183]
+modulate = Color(0.5629561, 0.5629561, 0.5629561, 1)
+position = Vector2(564, 79.99994)
+scale = Vector2(0.9386113, 0.9386114)
+texture = ExtResource("2_sk2q3")
+
+[node name="HomeScreen" type="Sprite2D" parent="." unique_id=906792452]
+position = Vector2(960, 540)
+texture = ExtResource("3_nc82p")

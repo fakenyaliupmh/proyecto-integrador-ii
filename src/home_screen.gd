@@ -4,43 +4,54 @@ const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
-var current_word: String = ""
+var current_word: Dictionary = {}
+
 var current_scene = preload("res://scenes/test_scene.tscn")
 var current_scene_instance: Node = null
 var current_game: CompleteWordGame = null
 
-var words = {
-	"word_1" : "Casa",
-	"word_2" : "Perro",
-	"word_3" : "Sol",
-	"word_4" : "Luna",
-	"word_5" : "Estrella",
-	"word_6" : "Nube",
-	"word_7" : "Arbol",
-	"word_8" : "Flor",
-	"word_9" : "Casa",
-	"word_10" : "Gato",
-	"word_11" : "Pez",
-	"word_12" : "Pajaro",
-	"word_13" : "Mariposa",
-	"word_14" : "Conejo",
-	"word_15" : "Manzana",
-	"word_16" : "Platano",
-	"word_17" : "Helado",
-	"word_18" : "Pastel",
-	"word_19" : "Pelota",
-	"word_20" : "Cometa",
-	"word_21" : "Coche",
-	"word_22" : "Bicicleta",
-	"word_23" : "Barco",
-	"word_24" : "Avion",
-	"word_25" : "Corazon",
-	"word_26" : "Corona",
-	"word_27" : "Robot",
-	"word_28" : "Dinosaurio",
-	"word_29" : "Castillo",
-	"word_30" : "Globo"
-}
+var characters: Array = [
+	preload("res://assets/sprites/dragon.png"),
+	preload("res://assets/sprites/ajolote.png")
+]
+
+var background_stack: Array = [
+	preload("res://assets/wallpaper/fondo (20260706031742).png"),
+	preload("res://assets/wallpaper/Proyecto (20260706032907).png"),
+	preload("res://assets/wallpaper/Proyecto (20260706032833).png"),
+]
+
+var words = [
+	{"Casa": preload("res://wireframes/words/w1.png")},
+	{"Perro": preload("res://wireframes/words/w1.png")},
+	{"Sol": preload("res://wireframes/words/w1.png")},
+	{"Luna": preload("res://wireframes/words/w1.png")},
+	{"Estrella": preload("res://wireframes/words/w1.png")},
+	{"Nube": preload("res://wireframes/words/w1.png")},
+	{"Arbol": preload("res://wireframes/words/w1.png")},
+	{"Flor": preload("res://wireframes/words/w1.png")},
+	{"Gato": preload("res://wireframes/words/w1.png")},
+	{"Pez": preload("res://wireframes/words/w2.png")},
+	{"Pajaro": preload("res://wireframes/words/w2.png")},
+	{"Mariposa": preload("res://wireframes/words/w2.png")},
+	{"Conejo": preload("res://wireframes/words/w2.png")},
+	{"Manzana": preload("res://wireframes/words/w2.png")},
+	{"Platano": preload("res://wireframes/words/w2.png")},
+	{"Helado": preload("res://wireframes/words/w2.png")},
+	{"Pastel": preload("res://wireframes/words/w2.png")},
+	{"Pelota": preload("res://wireframes/words/w2.png")},
+	{"Cometa": preload("res://wireframes/words/w2.png")},
+	{"Coche": preload("res://wireframes/words/w2.png")},
+	{"Bicicleta": preload("res://wireframes/words/w3.png")},
+	{"Barco": preload("res://wireframes/words/w3.png")},
+	{"Avion": preload("res://wireframes/words/w3.png")},
+	{"Corazon": preload("res://wireframes/words/w3.png")},
+	{"Corona": preload("res://wireframes/words/w3.png")},
+	{"Robot": preload("res://wireframes/words/w3.png")},
+	{"Dinosaurio": preload("res://wireframes/words/w3.png")},
+	{"Castillo": preload("res://wireframes/words/w3.png")},
+	{"Globo": preload("res://wireframes/words/w3.png")},
+]
 
 func _ready() -> void:
 	pass
@@ -73,11 +84,10 @@ func _on_word_completed() -> void:
 	next_round()
 
 
-func select_random_word() -> String:
-	var keys = words.keys()
-	var random_keys = keys[randi()% keys.size()]
-	print(words[random_keys])
-	return words[random_keys]
+func select_random_word() -> Dictionary:
+	var my_dict = words.pick_random()
+	print(my_dict)
+	return my_dict
 
 func next_round():
 	if current_game:
@@ -94,9 +104,16 @@ func next_round():
 	if current_scene_instance.has_node("AnimationPlayer"):
 		current_scene_instance.get_node("AnimationPlayer").play("init_scene")
 
-	var word = select_random_word().to_upper()
+	var word = select_random_word()
 
 	current_game = CompleteWordGame.new()
-	current_game.setup(word, SCREEN_SIZE)
+	current_game.setup(word,
+				SCREEN_SIZE,
+				characters.pick_random(),
+				background_stack.pick_random())
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
+	current_game.stop = false
+
+func generate_new_scene() -> void:
+	pass
