@@ -170,8 +170,10 @@ func _on_word_completed() -> void:
 	next_round()
 
 func select_random_word() -> Dictionary:
-	var my_dict = words.pick_random()
-	return my_dict
+	if words.is_empty():
+		return {}
+
+	return words.pop_at(randi_range(0, words.size() - 1))
 
 func next_round() -> void:
 	if is_instance_valid(current_game):
