@@ -6,6 +6,11 @@ const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
 
 var current_game: CompleteWordGame = null
 
+#SELECCION DE PERSONAJE
+var character_selection_scene = preload("res://scenes/pick_character.tscn")
+#Guardar el personaje elegido
+var selected_character: Texture2D = null
+
 var characters: Array = [
 	preload("res://assets/characters/dragon.png"),
 	preload("res://assets/characters/ajolote.png")
@@ -150,7 +155,21 @@ func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 
 func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "start_play":
-		next_round()
+		#next_round()
+		show_character_selection() #Modificaciónen lugar de next_round()
+
+#Funcion para mostrar selección de personaje
+func show_character_selection() -> void:
+	var selection_menu = character_selection_scene.instantiate()
+	add_child(selection_menu)
+	selection_menu.character_chosen.connect(_on_character_chosen)
+#Funcion cuando hace click
+func _on_character_chosen(chosen_texture: Texture2D) -> void:
+	selected_character = chosen_texture
+	var menu = get_node("CharacterSelection")
+	if menu:
+		menu.queue_free()
+	next_round()
 
 func _on_word_completed() -> void:
 	if not is_instance_valid(current_game):
@@ -189,6 +208,11 @@ func generate_new_scene() -> void:
 	var background: Texture2D = background_stack.pick_random()
 
 	current_game = CompleteWordGame.new()
+	
+	current_game.setup(word,
+				SCREEN_SIZE,
+				selected_character,
+				background_stack.pick_random())
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
 
