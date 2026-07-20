@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="2_ih2x6"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_ked1l"]
 [ext_resource type="Texture2D" uid="uid://b8wpvftmuo7xy" path="res://assets/sprites/spritesheet.png" id="4_b02wa"]
+[ext_resource type="AudioStream" uid="uid://tpx237lfey2a" path="res://sfx/next.WAV" id="4_ked1l"]
+[ext_resource type="AudioStream" uid="uid://pia5clr3d0a1" path="res://sfx/title.WAV" id="5_ih2x6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
@@ -22,6 +24,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../start:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_ddxy4"]
 resource_name = "play"
@@ -37,6 +51,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../start:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e2rjb"]
 _data = {
@@ -49,15 +75,18 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("meltDown:modulate")
+tracks/0/path = NodePath("HomeScreen:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 0)]
+"values": [Color(1, 1, 1, 0)]
 }
+
+[sub_resource type="Animation" id="Animation_ked1l"]
+resource_name = "main_menu"
 
 [sub_resource type="Animation" id="Animation_44cor"]
 resource_name = "start_play"
@@ -65,19 +94,20 @@ length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("meltDown:modulate")
+tracks/0/path = NodePath("HomeScreen:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(0.011764706, 0.011764706, 0.011764706, 0), Color(0.011764706, 0.011764706, 0.011764706, 1)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w43ym"]
 _data = {
 &"RESET": SubResource("Animation_w8yt5"),
+&"main_menu": SubResource("Animation_ked1l"),
 &"start_play": SubResource("Animation_44cor")
 }
 
@@ -87,11 +117,6 @@ script = ExtResource("1_bie51")
 [node name="Proyecto(20260706032833)" type="Sprite2D" parent="." unique_id=54875038]
 position = Vector2(947, 279)
 texture = ExtResource("2_ih2x6")
-
-[node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
-visible = false
-position = Vector2(960, 540)
-texture = ExtResource("3_ked1l")
 
 [node name="playButton" type="Area2D" parent="." unique_id=999107888]
 
@@ -118,9 +143,19 @@ limit_bottom = 1080
 
 [node name="esceneAnimations" type="AnimationPlayer" parent="." unique_id=303681550]
 libraries/ = SubResource("AnimationLibrary_w43ym")
+autoplay = &"main_menu"
 
-[node name="meltDown" type="Sprite2D" parent="." unique_id=179219610]
-modulate = Color(0.011764706, 0.011764706, 0.011764706, 0)
+[node name="start" type="AudioStreamPlayer" parent="." unique_id=1690055251]
+stream = ExtResource("4_ked1l")
+volume_db = -8.0
+pitch_scale = 0.95
+
+[node name="mainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=970260168]
+stream = ExtResource("5_ih2x6")
+autoplay = true
+
+[node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(960, 540)
 texture = ExtResource("3_ked1l")
 
