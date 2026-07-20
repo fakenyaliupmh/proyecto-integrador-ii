@@ -268,6 +268,9 @@ func _on_letter_pressed(button: Button) -> void:
 			break
 
 func remove_last_letter() -> void:
+	if stop:
+		return
+
 	if used_buttons.is_empty():
 		return
 
@@ -283,6 +286,7 @@ func remove_last_letter() -> void:
 func check_answer() -> bool:
 	if stop:
 		return false
+
 	self.stop = true
 	var player_word = ""
 
