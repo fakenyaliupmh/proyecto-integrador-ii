@@ -16,7 +16,7 @@ var answer_slot: Array[String] = []
 var slot_nodes: Array[Label] = []
 var used_buttons: Array[Button] = []
 
-var stop: bool = false
+var stop: bool = true
 
 var attemps = 0
 
@@ -154,6 +154,9 @@ func create_letter_button(letter: String, index: int) -> void:
 	)
 
 func _on_letter_pressed(button: Button) -> void:
+	if stop:
+		return
+	
 	var letter = button.text
 
 	for i in range(answer_slot.size()):
@@ -178,6 +181,8 @@ func remove_last_letter() -> void:
 			break
 
 func check_answer() -> bool:
+	if stop:
+		return false
 	self.stop = true
 	var player_word = ""
 
@@ -186,14 +191,12 @@ func check_answer() -> bool:
 
 	if player_word == current_word:
 		word_completed.emit()
-		self.stop = false
 		return true
 
 	attemps += 1 # Magic number
 	
 	if attemps >= 5: # Magic number
 		complete_word()
-		self.stop = false
 		return true
 	self.stop = false
 	return false
@@ -202,6 +205,7 @@ func reveal_random_letter() -> void:
 	pass
 
 func complete_word() -> void:
+	self.stop = true
 	for i in range(current_word.length()):
 		answer_slot[i] = current_word[i]
 		slot_nodes[i].text = current_word[i]

@@ -107,9 +107,13 @@ func next_round():
 	var word = select_random_word()
 
 	current_game = CompleteWordGame.new()
-	current_game.setup(word, SCREEN_SIZE)
+	current_game.setup(word,
+				SCREEN_SIZE,
+				characters.pick_random(),
+				background_stack.pick_random())
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
+	current_game.stop = false
 
 func generate_new_scene() -> void:
 	pass
