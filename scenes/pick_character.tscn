@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cujvsi4vb26lb"]
 
-[ext_resource type="Script" uid="uid://b5dduxvi174bw" path="res://pick_character.gd" id="1_01alm"]
+[ext_resource type="Script" uid="uid://b5dduxvi174bw" path="res://src/pick_character.gd" id="1_01alm"]
 [ext_resource type="Texture2D" uid="uid://cdghfhmq0plba" path="res://assets/wallpaper/fondo (20260706031742).png" id="2_sk2q3"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_nc82p"]
 [ext_resource type="Texture2D" uid="uid://d3awy7fqxr5ke" path="res://assets/characters/dragon.png" id="4_b4c7m"]
@@ -166,7 +166,7 @@ scale = Vector2(0.37471226, 0.3747123)
 sprite_frames = SubResource("SpriteFrames_yf5fn")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.22200827
+frame_progress = 0.44671977
 
 [node name="CatButton" type="Button" parent="." unique_id=1181921636]
 layout_mode = 0
@@ -198,7 +198,6 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=906792452]
-visible = false
 position = Vector2(960, 540)
 texture = ExtResource("3_nc82p")
 

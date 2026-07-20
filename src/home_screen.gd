@@ -3,7 +3,11 @@ extends Node2D
 const SCREEN_WIDTH = 1920
 const SCREEN_HEIGHT = 1080
 const SCREEN_SIZE = Vector2(SCREEN_WIDTH, SCREEN_HEIGHT)
-const character_selection_scene = preload("res://scenes/pick_character.tscn")
+const SCENES = {
+	"home": preload("res://scenes/home_screen.tscn"),
+	"pick_character": preload("res://scenes/pick_character.tscn"),
+	"end": preload("res://scenes/end_scene.tscn")
+	}
 
 var current_game: CompleteWordGame = null
 var selected_character: Texture2D = null
@@ -12,6 +16,14 @@ var background_stack: Array = [
 	preload("res://assets/wallpaper/fondo (20260706031742).png"),
 	preload("res://assets/wallpaper/Proyecto (20260706032907).png"),
 	preload("res://assets/wallpaper/Proyecto (20260706032833).png"),
+]
+
+# This is just made for test
+var wordss = [
+	{
+		"word": "casa",
+		"sprite": preload("res://assets/words/casa.png")
+	},
 ]
 
 var words = [
@@ -133,12 +145,6 @@ var words = [
 	#},
 ]
 
-func _ready() -> void:
-	pass
-
-func _process(delta: float) -> void:
-	pass
-
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if Input.is_action_just_pressed("click"):
 		$playButton/CollisionShape2D.disabled = true
@@ -150,12 +156,11 @@ func _on_escene_animations_animation_finished(anim_name: StringName) -> void:
 		show_character_selection()
 
 func show_character_selection() -> void:
-	var selection_menu = character_selection_scene.instantiate()
-
+	var selection_menu = SCENES["pick_character"].instantiate()
 	selection_menu.get_node("AnimationPlayer").play("fade_in")
 	add_child(selection_menu)
 	selection_menu.character_chosen.connect(_on_character_chosen)
-	
+
 func _on_character_chosen(chosen_texture: Texture2D) -> void:
 	selected_character = chosen_texture
 	var menu = get_node("CharacterSelection")
@@ -195,6 +200,10 @@ func next_round() -> void:
 	generate_new_scene()
 
 func generate_new_scene() -> void:
+	if words.is_empty():
+		play_final_scene()
+		return
+
 	var word: Dictionary = select_random_word()
 	var background: Texture2D = background_stack.pick_random()
 
@@ -210,3 +219,11 @@ func generate_new_scene() -> void:
 	add_child(current_game)
 
 	current_game.stop = false
+
+func play_final_scene() -> void:
+	var new_scene = SCENES["end"].instantiate()
+	new_scene.setup(
+		SCREEN_SIZE,
+		selected_character
+	)
+	add_child(new_scene)

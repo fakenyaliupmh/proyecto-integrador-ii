@@ -1,6 +1,5 @@
 extends Control
 class_name PickCharacter
-
 signal character_chosen(character_texture)
 
 const DRAGON = preload("res://assets/characters/dragon.png")

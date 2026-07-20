@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://23dd7dxq132n"]
+
+[ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="1_nld2j"]
+[ext_resource type="Script" uid="uid://c13ohe28xsuhv" path="res://src/end_scene.gd" id="1_s7dif"]
+
+[node name="end_scene" type="Node2D" unique_id=708053357]
+script = ExtResource("1_s7dif")
+
+[node name="HomeScreen" type="Sprite2D" parent="." unique_id=366216398]
+position = Vector2(960, 540)
+texture = ExtResource("1_nld2j")
