@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_bie51"]
 [ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="2_ih2x6"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_ked1l"]
-[ext_resource type="Texture2D" uid="uid://cjotvc46df3jq" path="res://assets/sprites/spritesheet.png" id="4_b02wa"]
+[ext_resource type="Texture2D" uid="uid://b8wpvftmuo7xy" path="res://assets/sprites/spritesheet.png" id="4_b02wa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
@@ -85,7 +85,6 @@ _data = {
 script = ExtResource("1_bie51")
 
 [node name="Proyecto(20260706032833)" type="Sprite2D" parent="." unique_id=54875038]
-modulate = Color(0.53692776, 0.53692776, 0.53692776, 1)
 position = Vector2(947, 279)
 texture = ExtResource("2_ih2x6")
 
