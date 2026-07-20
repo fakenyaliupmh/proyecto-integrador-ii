@@ -204,7 +204,6 @@ func next_round() -> void:
 
 func generate_new_scene() -> void:
 	var word: Dictionary = select_random_word()
-	var character: Texture2D = characters.pick_random()
 	var background: Texture2D = background_stack.pick_random()
 
 	current_game = CompleteWordGame.new()
@@ -212,15 +211,10 @@ func generate_new_scene() -> void:
 	current_game.setup(word,
 				SCREEN_SIZE,
 				selected_character,
-				background_stack.pick_random())
+				background_stack.pick_random()
+				)
+
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
-
-	current_game.setup(
-		word,
-		SCREEN_SIZE,
-		character,
-		background
-	)
 
 	current_game.stop = false
