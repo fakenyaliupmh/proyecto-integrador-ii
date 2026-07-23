@@ -21,8 +21,8 @@ var background_stack: Array = [
 # This is just made for test
 var wordss = [
 	{
-		"word": "casa",
-		"sprite": preload("res://assets/words/casa.png")
+		"word": "ávion",
+		"sprite": preload("res://assets/words/avion.png")
 	},
 ]
 
@@ -116,7 +116,7 @@ var words = [
 		"sprite": preload("res://assets/words/barco.png")
 	},
 	{
-		"word": "avion",
+		"word": "ávion",
 		"sprite": preload("res://assets/words/avion.png")
 	},
 	{
@@ -173,6 +173,7 @@ func _on_word_completed() -> void:
 		return
 
 	current_game.stop = true
+	current_game.set_controls_enabled(false)
 
 	var tween = create_tween()
 	tween.tween_property(
@@ -218,7 +219,7 @@ func generate_new_scene() -> void:
 	current_game.word_completed.connect(_on_word_completed)
 	add_child(current_game)
 
-	current_game.stop = false
+	current_game.begin_round()
 
 func play_final_scene() -> void:
 	var new_scene = SCENES["end"].instantiate()

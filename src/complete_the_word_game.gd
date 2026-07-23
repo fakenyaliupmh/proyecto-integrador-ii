@@ -4,6 +4,11 @@ signal word_completed
 
 const UNDERSCORE = preload("res://scenes/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
+const ROUND_INPUT_DELAY = 1.5
+
+const CORRECT_COLOR = Color("#57C785")
+const TRY_AGAIN_COLOR = Color("#F2B84B")
+const NORMAL_COLOR = Color.WHITE
 
 var screen_size: Vector2 = Vector2.ZERO
 var current_word: String = ""
@@ -11,6 +16,8 @@ var word_sprite: Texture2D = null
 var current_character: Texture2D = null
 var current_bg: Texture2D = null
 
+var check_button: Button = null
+var letter_buttons: Array[Button] = []
 var answer_slot: Array[String] = []
 var slot_nodes: Array[Label] = []
 var used_buttons: Array[Button] = []
@@ -67,8 +74,21 @@ func setup(
 	gen_text_underscore(current_word)
 	create_check_button()
 
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 1.0)
+func begin_round() -> void:
+	stop = true
+	set_controls_enabled(false)
+
+	var fade_tween := create_tween()
+	fade_tween.tween_property(self, "modulate:a", 1.0, 1.0)
+	await fade_tween.finished
+
+	await get_tree().create_timer(ROUND_INPUT_DELAY).timeout
+
+	if not is_inside_tree():
+		return
+
+	stop = false
+	set_controls_enabled(true)
 
 func create_check_button() -> void:
 	var button = Button.new()
@@ -267,6 +287,16 @@ func _on_letter_pressed(button: Button) -> void:
 			button.disabled = true
 			break
 
+func set_controls_enabled(enabled: bool) -> void:
+	if is_instance_valid(check_button):
+		check_button.disabled = not enabled
+
+	for button in letter_buttons:
+		if not is_instance_valid(button):
+			continue
+
+		button.disabled = not enabled or used_buttons.has(button)
+
 func remove_last_letter() -> void:
 	if stop:
 		return
@@ -288,21 +318,26 @@ func check_answer() -> bool:
 		return false
 
 	self.stop = true
+	set_controls_enabled(false)
+	
 	var player_word = ""
 
 	for letter in answer_slot:
 		player_word += letter
 
 	if player_word == current_word:
+		correct_animation()
 		word_completed.emit()
 		return true
 
 	attemps += 1 # Magic number
+	incorrect_animation()
 	
 	if attemps >= 5: # Magic number
 		complete_word()
 		return true
 	self.stop = false
+	set_controls_enabled(true)
 	return false
 
 func reveal_random_letter() -> void:
@@ -310,15 +345,67 @@ func reveal_random_letter() -> void:
 
 func complete_word() -> void:
 	self.stop = true
+	set_controls_enabled(false)
+	
 	for i in range(current_word.length()):
 		answer_slot[i] = current_word[i]
 		slot_nodes[i].text = current_word[i]
 	
-	await get_tree().create_timer(1.5).timeout # Magic number
+	await correct_animation()
 	word_completed.emit()
 	
 func incorrect_animation() -> void:
-	pass
+	var original_positions: Array[Vector2] = []
+
+	for label in slot_nodes:
+		original_positions.append(label.position)
+		label.add_theme_color_override("font_color", TRY_AGAIN_COLOR)
+
+	var tween = create_tween()
+
+	for i in range(slot_nodes.size()):
+		var label = slot_nodes[i]
+		var original_position := original_positions[i]
+
+		tween.parallel().tween_property(
+			label,
+			"position:x",
+			original_position.x + 8.0,
+			0.10
+		)
+
+	await tween.finished
+
+	var return_tween = create_tween()
+
+	for i in range(slot_nodes.size()):
+		return_tween.parallel().tween_property(
+			slot_nodes[i],
+			"position",
+			original_positions[i],
+			0.18
+		)
+
+	await return_tween.finished
+	await get_tree().create_timer(0.25).timeout
+
+	for label in slot_nodes:
+		label.add_theme_color_override("font_color", NORMAL_COLOR)
 		
 func correct_animation() -> void:
-	pass
+	for label in slot_nodes:
+		if not is_instance_valid(label):
+			continue
+
+		label.pivot_offset = label.size * 0.5
+		label.add_theme_color_override("font_color", CORRECT_COLOR)
+
+		var tween = create_tween()
+		tween.set_trans(Tween.TRANS_BACK)
+		tween.set_ease(Tween.EASE_OUT)
+		tween.tween_property(label, "scale", Vector2(1.25, 1.25), 0.15)
+		tween.tween_property(label, "scale", Vector2.ONE, 0.20)
+
+		await get_tree().create_timer(0.06).timeout
+
+	await get_tree().create_timer(0.35).timeout
