@@ -15,6 +15,7 @@ var current_word: String = ""
 var word_sprite: Texture2D = null
 var current_character: Texture2D = null
 var current_bg: Texture2D = null
+var current_audio = null
 
 var home: Node2D = null
 
@@ -64,6 +65,7 @@ func setup(
 
 	self.current_word = word["word"].to_upper()
 	self.word_sprite = word["sprite"]
+	self.current_audio = word["sfx"]
 
 	modulate.a = 0.0 # Magic number
 
@@ -79,7 +81,7 @@ func begin_round() -> void:
 	stop = true
 	set_controls_enabled(false)
 
-	var fade_tween := create_tween()
+	var fade_tween = create_tween()
 	fade_tween.tween_property(self, "modulate:a", 1.0, 1.0)
 	await fade_tween.finished
 
@@ -87,6 +89,9 @@ func begin_round() -> void:
 
 	if not is_inside_tree():
 		return
+
+	await home.play_voice_and_wait(home.can_you_write)
+	await home.play_voice(current_audio)
 
 	stop = false
 	set_controls_enabled(true)
@@ -334,7 +339,7 @@ func check_answer() -> bool:
 		return true
 
 	attemps += 1 # Magic number
-	incorrect_animation()
+	await incorrect_animation()
 	
 	if attemps >= 5: # Magic number
 		complete_word()
@@ -359,6 +364,7 @@ func complete_word() -> void:
 	
 func incorrect_animation() -> void:
 	home.play_sfx(home.sfx["try_again"])
+	home.play_voice(home.try_again.pick_random())
 	var original_positions: Array[Vector2] = []
 
 	for label in slot_nodes:
@@ -395,12 +401,15 @@ func incorrect_animation() -> void:
 
 	for label in slot_nodes:
 		label.add_theme_color_override("font_color", NORMAL_COLOR)
-		
+
 func correct_animation() -> void:
 	if (home.max_levels - home.level_counter) == 1:
 		home.play_sfx(home.sfx["correct02"])
 	else:
 		home.play_sfx(home.sfx["correct01"])
+
+	home.play_voice(home.correct.pick_random())
+
 	for label in slot_nodes:
 		if not is_instance_valid(label):
 			continue

@@ -3,9 +3,16 @@ var screen_size: Vector2 = Vector2.ZERO
 var current_character: Texture2D = null
 var background: Texture2D = null
 
+var home = null
+
 func _ready() -> void:
 	create_text()
-	
+	create_restart_button()
+	home.play_voice(home.congratulations)
+
+func _on_restart_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/home_screen.tscn")
+
 func create_text() -> void:
 	var label = Label.new()
 
@@ -17,6 +24,32 @@ func create_text() -> void:
 	label.add_theme_font_size_override("font_size",60)
 
 	add_child(label)
+
+func create_restart_button() -> void:
+	var button = Button.new()
+
+	button.text = "  Volver al inicio  "
+	button.size = Vector2(280, 80)
+	button.position = Vector2(
+		screen_size.x * 0.85,
+		screen_size.y * 0.85
+	)
+	
+	button.add_theme_font_size_override("font_size", 32) # Magic number
+	button.add_theme_color_override("font_color", Color(0.123, 0.118, 0.104, 1.0))
+	button.size = Vector2(200,80) # Magic number
+
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.0, 0.708, 0.348, 1.0)
+	style.corner_radius_top_left = 12 # Magic number
+	style.corner_radius_top_right = 12 # Magic number
+	style.corner_radius_bottom_left = 12 # Magic number
+	style.corner_radius_bottom_right = 12 # Magic number
+	button.add_theme_stylebox_override("normal", style)
+
+	add_child(button)
+
+	button.pressed.connect(_on_restart_button_pressed)
 
 func setup(new_screen_size: Vector2, character: Texture2D, bg: Texture2D = null) -> void:
 	self.screen_size = new_screen_size

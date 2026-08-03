@@ -14,6 +14,9 @@ var selected_character: Texture2D = null
 var title_sprite: AnimatedSprite2D = null
 var pause = false
 
+var instructions = preload("res://voices/instructions/instructions.mp3")
+var can_you_write = preload("res://voices/main/can_you_write.mp3")
+
 var max_levels = 5
 var level_counter = 0
 
@@ -38,6 +41,22 @@ var sfx: Dictionary = {
 	"end_game_button": preload("res://sfx/end_game.mp3"),
 }
 
+var try_again = [
+	preload("res://voices/try_again/try01.mp3"),
+	preload("res://voices/try_again/try02.mp3"),
+	preload("res://voices/try_again/try03.mp3"),
+	preload("res://voices/try_again/try04.mp3"),
+	preload("res://voices/try_again/try05.mp3"),
+]
+
+var correct = [
+	preload("res://voices/correct/asi_se_hace.mp3"),
+	preload("res://voices/correct/good_job.mp3"),
+	preload("res://voices/correct/thats_it.mp3"),
+]
+
+var congratulations = preload("res://voices/congratulations/congrats.mp3")
+
 # This is just made for test
 var wordss = [
 	{
@@ -51,49 +70,49 @@ var words = [
 		"word": "casa",
 		"sprite": preload("res://assets/words/casa.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/casa.mp3"),
 	},
 	{
 		"word": "perro",
 		"sprite": preload("res://assets/words/perro.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/perro.mp3"),
 	},
 	{
 		"word": "sol",
 		"sprite": preload("res://assets/words/sol.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/sol.mp3"),
 	},
 	{
 		"word": "luna",
 		"sprite": preload("res://assets/words/luna.png"),
 		"bg": backgrounds["night"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/luna.mp3"),
 	},
 	{
 		"word": "estrella",
 		"sprite": preload("res://assets/words/estrella.png"),
 		"bg": backgrounds["night"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/estrella.mp3"),
 	},
 	{
 		"word": "nube",
 		"sprite": preload("res://assets/words/nube.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/nube.mp3"),
 	},
 	{
 		"word": "árbol",
 		"sprite": preload("res://assets/words/arbol.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/arbol.mp3"),
 	},
 	{
 		"word": "flor",
 		"sprite": preload("res://assets/words/flor.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/flor.mp3"),
 	},
 	#{
 	#	"word": "gato",
@@ -127,55 +146,55 @@ var words = [
 		"word": "helado",
 		"sprite": preload("res://assets/words/helado.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/helado.mp3"),
 	},
 	{
 		"word": "pastel",
 		"sprite": preload("res://assets/words/pastel.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/pastel.mp3"),
 	},
 	{
 		"word": "pelota",
 		"sprite": preload("res://assets/words/pelota.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/pelota.mp3"),
 	},
 	{
 		"word": "cometa",
 		"sprite": preload("res://assets/words/cometa.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/cometa.mp3"),
 	},
 	{
 		"word": "carro",
 		"sprite": preload("res://assets/words/carro.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/carro.mp3"),
 	},
 	{
 		"word": "bicicleta",
 		"sprite": preload("res://assets/words/bicicleta.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/bicicleta.mp3"),
 	},
 	{
 		"word": "barco",
 		"sprite": preload("res://assets/words/barco.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/barco.mp3"),
 	},
 	{
 		"word": "avión",
 		"sprite": preload("res://assets/words/avion.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/avion.mp3"),
 	},
 	{
 		"word": "corazón",
 		"sprite": preload("res://assets/words/corazon.png"),
 		"bg": backgrounds["day"],
-		"sfx": null,
+		"sfx": preload("res://voices/words/corazon.mp3"),
 	},
 	#{
 	#	"word": "corona",
@@ -232,6 +251,12 @@ func play_music(stream) -> void:
 	$MusicPlayer.volume_db = -12
 	$MusicPlayer.play()
 
+func play_music_lower(stream) -> void:
+	$MusicPlayer.stop()
+	$MusicPlayer.stream = stream
+	$MusicPlayer.volume_db = -24
+	$MusicPlayer.play()
+
 func stop_music() -> void:
 	$MusicPlayer.stop()
 
@@ -240,6 +265,17 @@ func play_sfx(stream) -> void:
 	$SFXPlayer.stream = stream
 	$SFXPlayer.volume_db = -12
 	$SFXPlayer.play()
+
+func play_voice(stream) -> void:
+	$VoicePlayer.stop()
+	$VoicePlayer.stream = stream
+	$VoicePlayer.play()
+
+func play_voice_and_wait(stream) -> void:
+	$VoicePlayer.stop()
+	$VoicePlayer.stream = stream
+	$VoicePlayer.play()
+	await $VoicePlayer.finished
 
 func set_title() -> void:
 	var title: Texture2D = preload(
@@ -305,7 +341,7 @@ func show_character_selection() -> void:
 func _on_character_chosen(chosen_texture: Texture2D) -> void:
 	selected_character = chosen_texture
 	var menu = get_node("CharacterSelection")
-	play_music(music["game_music"])
+	play_music_lower(music["game_music"])
 	if menu:
 		menu.queue_free()
 	next_round()
@@ -366,6 +402,8 @@ func generate_new_scene() -> void:
 
 func play_final_scene() -> void:
 	var new_scene = SCENES["end"].instantiate()
+	new_scene.home = self
+
 	new_scene.setup(
 		SCREEN_SIZE,
 		selected_character,
