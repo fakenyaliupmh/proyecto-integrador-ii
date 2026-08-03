@@ -4,7 +4,7 @@ signal word_completed
 
 const UNDERSCORE = preload("res://scenes/underscore.tscn")
 const MAX_WORD_POOL_SIZE = 18
-const ROUND_INPUT_DELAY = 1.5
+const ROUND_INPUT_DELAY = 0.1
 
 const CORRECT_COLOR = Color("#57C785")
 const TRY_AGAIN_COLOR = Color("#F2B84B")
@@ -15,6 +15,8 @@ var current_word: String = ""
 var word_sprite: Texture2D = null
 var current_character: Texture2D = null
 var current_bg: Texture2D = null
+
+var home: Node2D = null
 
 var check_button: Button = null
 var letter_buttons: Array[Button] = []
@@ -54,12 +56,11 @@ func setup(
 		word: Dictionary,
 		new_screen_size: Vector2,
 		character: Texture2D = null,
-		bg: Texture2D = null
 	) -> void:
 
 	self.screen_size = new_screen_size
 	self.current_character = character
-	self.current_bg = bg
+	self.current_bg = word["bg"]
 
 	self.current_word = word["word"].to_upper()
 	self.word_sprite = word["sprite"]
@@ -92,6 +93,7 @@ func begin_round() -> void:
 
 func create_check_button() -> void:
 	var button = Button.new()
+	check_button = button
 	button.text = "-->"
 
 	button.position = Vector2(
@@ -260,6 +262,7 @@ func set_character() -> void:
 
 func create_letter_button(letter: String, index: int) -> void:
 	var button = Button.new()
+	letter_buttons.append(button)
 	button.text = letter.to_upper()
 	button.position = Vector2(
 		screen_size.x * 0.50 + (index % 6) * 100, # Magic number
@@ -326,7 +329,7 @@ func check_answer() -> bool:
 		player_word += letter
 
 	if player_word == current_word:
-		correct_animation()
+		await correct_animation()
 		word_completed.emit()
 		return true
 
@@ -355,6 +358,7 @@ func complete_word() -> void:
 	word_completed.emit()
 	
 func incorrect_animation() -> void:
+	home.play_sfx(home.sfx["try_again"])
 	var original_positions: Array[Vector2] = []
 
 	for label in slot_nodes:
@@ -393,6 +397,10 @@ func incorrect_animation() -> void:
 		label.add_theme_color_override("font_color", NORMAL_COLOR)
 		
 func correct_animation() -> void:
+	if (home.max_levels - home.level_counter) == 1:
+		home.play_sfx(home.sfx["correct02"])
+	else:
+		home.play_sfx(home.sfx["correct01"])
 	for label in slot_nodes:
 		if not is_instance_valid(label):
 			continue

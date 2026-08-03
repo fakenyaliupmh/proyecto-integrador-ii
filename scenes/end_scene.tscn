@@ -7,5 +7,6 @@
 script = ExtResource("1_s7dif")
 
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=366216398]
+visible = false
 position = Vector2(960, 540)
 texture = ExtResource("1_nld2j")

@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://eiset787upbv"]
 
 [ext_resource type="Script" uid="uid://cxhq1qeviu3fb" path="res://src/home_screen.gd" id="1_bie51"]
-[ext_resource type="Texture2D" uid="uid://dh5kpewsonyvr" path="res://assets/wallpaper/Proyecto (20260706032833).png" id="2_ih2x6"]
+[ext_resource type="Texture2D" uid="uid://cdiqtyojvi22q" path="res://assets/wallpaper/night.png" id="2_ked1l"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_ked1l"]
 [ext_resource type="Texture2D" uid="uid://b8wpvftmuo7xy" path="res://assets/sprites/spritesheet.png" id="4_b02wa"]
-[ext_resource type="AudioStream" uid="uid://tpx237lfey2a" path="res://sfx/next.WAV" id="4_ked1l"]
-[ext_resource type="AudioStream" uid="uid://pia5clr3d0a1" path="res://sfx/title.WAV" id="5_ih2x6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w43ym"]
 radius = 272.4133
@@ -24,18 +22,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../start:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_ddxy4"]
 resource_name = "play"
@@ -50,18 +36,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../start:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e2rjb"]
@@ -114,11 +88,13 @@ _data = {
 [node name="HomeScreen" type="Node2D" unique_id=1862836571]
 script = ExtResource("1_bie51")
 
-[node name="Proyecto(20260706032833)" type="Sprite2D" parent="." unique_id=54875038]
-position = Vector2(947, 279)
-texture = ExtResource("2_ih2x6")
+[node name="Night" type="Sprite2D" parent="." unique_id=1046953798]
+modulate = Color(0.488577, 0.488577, 0.488577, 1)
+position = Vector2(960, 540)
+texture = ExtResource("2_ked1l")
 
 [node name="playButton" type="Area2D" parent="." unique_id=999107888]
+position = Vector2(0, 148)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="playButton" unique_id=70458873]
 position = Vector2(960, 540)
@@ -145,19 +121,14 @@ limit_bottom = 1080
 libraries/ = SubResource("AnimationLibrary_w43ym")
 autoplay = &"main_menu"
 
-[node name="start" type="AudioStreamPlayer" parent="." unique_id=1690055251]
-stream = ExtResource("4_ked1l")
-volume_db = -8.0
-pitch_scale = 0.95
-
-[node name="mainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=970260168]
-stream = ExtResource("5_ih2x6")
-autoplay = true
-
 [node name="HomeScreen" type="Sprite2D" parent="." unique_id=611063307]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(960, 540)
 texture = ExtResource("3_ked1l")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1810254805]
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=1760485869]
 
 [connection signal="input_event" from="playButton" to="." method="_on_area_2d_input_event"]
 [connection signal="animation_finished" from="esceneAnimations" to="." method="_on_escene_animations_animation_finished"]

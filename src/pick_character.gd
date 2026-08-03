@@ -11,37 +11,40 @@ var current_character: Texture2D = null
 
 var is_paused = false
 
-func _on_selection_finished() -> void:
-	character_chosen.emit(current_character)
-
 func play_selection_sound() -> void:
+	var home = get_parent()
+	home.stop_music()
+	await home.play_sfx(home.sfx["select_character"])
+	
 	$AnimationPlayer.play("fade_out")
-	$selection.playing = true
+	await $AnimationPlayer.animation_finished
+	
+	character_chosen.emit(current_character)
 
 func _on_dragon_button_pressed() -> void:
 	if is_paused:
 		return
 	is_paused = true
-	play_selection_sound()
 	current_character = DRAGON
+	play_selection_sound()
 
 func _on_ajolote_button_pressed() -> void:
 	if is_paused:
 		return
 	is_paused = true
-	play_selection_sound()
 	current_character = AJOLOTE
+	play_selection_sound()
 
 func _on_cat_button_pressed() -> void:
 	if is_paused:
 		return
 	is_paused = true
-	play_selection_sound()
 	current_character = CAT
+	play_selection_sound()
 
 func _on_fox_button_pressed() -> void:
 	if is_paused:
 		return
 	is_paused = true
-	play_selection_sound()
 	current_character = FOX
+	play_selection_sound()

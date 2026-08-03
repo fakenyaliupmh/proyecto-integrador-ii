@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://cujvsi4vb26lb"]
 
 [ext_resource type="Script" uid="uid://b5dduxvi174bw" path="res://src/pick_character.gd" id="1_01alm"]
-[ext_resource type="Texture2D" uid="uid://cdghfhmq0plba" path="res://assets/wallpaper/fondo (20260706031742).png" id="2_sk2q3"]
+[ext_resource type="Texture2D" uid="uid://cdghfhmq0plba" path="res://assets/wallpaper/sunset.png" id="2_sk2q3"]
 [ext_resource type="Texture2D" uid="uid://b4v41aj0se1ro" path="res://wireframes/home_screen.png" id="3_nc82p"]
 [ext_resource type="Texture2D" uid="uid://d3awy7fqxr5ke" path="res://assets/characters/dragon.png" id="4_b4c7m"]
 [ext_resource type="Texture2D" uid="uid://oh5k24tgc2ut" path="res://assets/characters/cat.png" id="5_d4igs"]
 [ext_resource type="Texture2D" uid="uid://yy5vcvjq6vqv" path="res://assets/characters/ajolote.png" id="5_ijh5o"]
-[ext_resource type="AudioStream" uid="uid://c64h1x38edcx1" path="res://sfx/open_menu.WAV" id="7_d4igs"]
 [ext_resource type="Texture2D" uid="uid://ciyv6netgx7bt" path="res://assets/characters/fox.png" id="7_mqfyn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mqfyn"]
@@ -205,11 +204,7 @@ texture = ExtResource("3_nc82p")
 root_node = NodePath("../HomeScreen")
 libraries/ = SubResource("AnimationLibrary_d4igs")
 
-[node name="selection" type="AudioStreamPlayer" parent="." unique_id=680546784]
-stream = ExtResource("7_d4igs")
-
 [connection signal="pressed" from="DragonButton" to="." method="_on_dragon_button_pressed"]
 [connection signal="pressed" from="AjoloteButton" to="." method="_on_ajolote_button_pressed"]
 [connection signal="pressed" from="CatButton" to="." method="_on_cat_button_pressed"]
 [connection signal="pressed" from="FoxButton" to="." method="_on_fox_button_pressed"]
-[connection signal="finished" from="selection" to="." method="_on_selection_finished"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dh5kpewsonyvr"
-path="res://.godot/imported/Proyecto (20260706032833).png-dc9984ec4cbd5f222cc1f7e9c5b6f6f7.ctex"
+uid="uid://cdghfhmq0plba"
+path="res://.godot/imported/sunset.png-0675ee83f0631a80cda47ee8dbd56e82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/wallpaper/Proyecto (20260706032833).png"
-dest_files=["res://.godot/imported/Proyecto (20260706032833).png-dc9984ec4cbd5f222cc1f7e9c5b6f6f7.ctex"]
+source_file="res://assets/wallpaper/sunset.png"
+dest_files=["res://.godot/imported/sunset.png-0675ee83f0631a80cda47ee8dbd56e82.ctex"]
 
 [params]
 
